@@ -1,0 +1,121 @@
+/*  Mobile RWD  */
+main {
+  .main__stepper {
+    margin-top: 24px;
+    display: flex; //讓 step 橫向排列
+
+    .step {
+      display: flex; //讓 circle, line 橫向排列
+      flex: 1; //讓每個 step分成三等份
+      position: relative;
+      text-align: center; //讓數字置中
+      @include getStepNums(3);
+
+      &:nth-child(1) .step__line {
+        left: calc(32px + 32px);
+        right: calc(-50% + 16px + 32px);
+      }
+
+      &:nth-child(2) {
+        justify-content: center;
+
+        .step__line {
+          left: calc(50% + 16px + 32px);
+          right: calc(-100% + 32px + 32px);
+        }
+      }
+
+      &:nth-child(3) {
+        justify-content: flex-end;
+      }
+
+      .step__circle {
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--stepper-color);
+        color: var(--stepper-color);
+        border-radius: 50%;
+        font-weight: 700;
+        line-height: 32px;
+      }
+
+      .step__label {
+        display: none;
+      }
+
+      .step__line {
+        height: 2px;
+        background-color: var(--stepper-line);
+        position: absolute;
+        top: 50%;
+      }
+
+      &.active,
+      &.checked {
+        .step__circle {
+          border-color: var(--stepper-circle-bg);
+          background: var(--stepper-circle-bg);
+          color: var(--stepper-circle-text);
+        }
+
+        .step__line {
+          background: var(--stepper-text-active);
+        }
+      }
+
+      &.checked {
+        .step__circle::after {
+          content: "\2714";
+        }
+      }
+    }
+  }
+}
+
+/*  >= 375px RWD  */
+@media screen and (min-width: 375px) {
+
+  main {
+    .main__stepper {
+      margin-top: 0;
+      grid-column: 1 / 7;
+      grid-row: 1 / 2;
+
+      .step {
+        align-items: center;
+
+        &:nth-child(1) .step__line {
+          left: calc(24px + 0.5vw + 64px + 32px);
+          right: calc(-50% + (24px + 0.5vw + 64px) / 2 + 32px);
+        }
+
+        &:nth-child(2) {
+          .step__line {
+            left: calc(50% + (24px + 0.5vw + 64px) / 2 + 32px);
+            right: calc(-100% + 64px + 0.5vw + 24px + 32px);
+          }
+        }
+
+        .step__circle {
+          width: 24px;
+          height: 24px;
+          font-size: 12px;
+          line-height: 24px;
+        }
+
+        .step__label {
+          display: block;
+          margin-left: 0.5vw;
+          color: var(--stepper-color);
+        }
+
+        &.active,
+        &.checked {
+          .step__label {
+            color: var(--stepper-text-active);
+          }
+        }
+      }
+    }
+  }
+}
